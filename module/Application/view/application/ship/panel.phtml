@@ -1,0 +1,64 @@
+<style type="text/css">
+    <!--
+
+<?php
+$this->headMeta()->appendHttpEquiv('refresh','20');
+
+foreach ($this->navi as $key => $nave) {
+    echo "#nave$key {\n";
+    echo "   position:absolute;\n";
+    echo "   left: calc(".$nave['x']."% - 25px);\n";
+    echo "   top: calc(".$nave['y']."% - 25px);\n";
+    echo "}\n";
+}
+?>
+    -->
+</style>
+
+<div id="navi">
+<?php
+$count = 0;
+foreach ($this->navi as $key => $nave) {
+    $count++;
+    if($count>7) $count = 1;
+    echo "<div id='nave$key'><img src='/img/nave$count.png' height=50> ".$nave['nome']."</div>\n";
+}
+?>
+</div>
+
+<div id="menu">
+<a href="javascript:this.location = '/user/log/out'" class='btn btn-primary'>Logout</a>
+» <a href="javascript:this.location = '/'" class='btn btn-primary'>Home</a>
+» <a href="javascript:this.location = '/ship/index/<?= $this->field->getId(); ?>'" class='btn btn-primary'><?= $this->field->getName(); ?></a>
+» <b><?= $this->ship->getName(); ?></b>
+</div>
+
+<div id="info">
+        <?
+            echo "<p>".$this->info."</p>";
+            echo "<p><a href=\"javascript:this.location = '".$this->url('ship',array('action'=>'increaseVelocity', 'id'=>$ship->getId()))."'\" class='btn btn-warning btn-lg'>v+</a>";
+            echo "<a href=\"javascript:this.location = '".$this->url('ship',array('action'=>'decreaseVelocity', 'id'=>$ship->getId()))."'\" class='btn btn-warning btn-lg'>v-</a>";
+            echo " <a href=\"javascript:this.location = '".$this->url('ship',array('action'=>'increaseAngle', 'id'=>$ship->getId()))."'\" class='btn btn-success btn-lg'>a+</a>";
+            echo "<a href=\"javascript:this.location = '".$this->url('ship',array('action'=>'decreaseAngle', 'id'=>$ship->getId()))."'\" class='btn btn-success btn-lg'>a-</a>";
+            echo " <a href=\"javascript:this.location = '".$this->url('weapon',array('action'=>'index', 'id'=>$ship->getId()))."'\" class='btn btn-danger btn-lg'>Camera di lancio</a>";
+        ?>
+    <form method="post" action="/application/weapon/fire">
+        <fieldset>
+            <select name="weapon_id" required>
+                <?
+                    $count = 0;
+                    foreach ($this->weapons as $weapon) {
+                        if(!$weapon->getFired()) {
+                            $count++;
+                            echo "<option value='".$weapon->getId()."'>".$weapon->getText()."</option>";
+                        }
+                    }
+                ?>
+            </select>
+            <? if($count) { ?>
+            &nbsp;direzione: <input type="number" name="angle" min="0" max="359">°
+            &nbsp;<input type="submit" value="Fuoco!" class='btn btn-danger btn-lg'>
+            <? } ?>
+        </fieldset>
+    </form>
+</div>

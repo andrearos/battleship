@@ -1,0 +1,38 @@
+<?php
+
+$namespaces = array('error','success','info','default');
+foreach($namespaces as $namespace) {
+    $flashmessages = $this->flashmessenger()->render($namespace);
+    if(!empty($flashmessages)) {
+        $classe = $namespace=='error'?'danger':$namespace;
+        echo "<div data-alert='alert' class='alert alert-$classe'>";
+        echo "<button class='close' data-dismiss='alert'>&times;</button>";
+        echo $flashmessages;
+        echo "</div>";
+    }
+}
+
+?>
+<h2>Siluri disponibili:</h2>
+<table>
+<?php
+
+$count = 0;
+foreach ($this->weapons as $weapon) {
+    $count++;
+    echo "<tr>";
+    echo "<td>$count: <a href=\"javascript:this.location = '".$this->url('weapon',array('action'=>'edit', 'id'=>$weapon['id']))."'\" class='btn btn-warning'>".$weapon['text']."</a>";
+    echo "<td><a href=\"javascript:this.location = '".$this->url('weapon',array('action'=>'delete', 'id'=>$weapon['id']))."'\" class='btn btn-danger'>Elimina</a>";
+    echo "</tr>";
+}
+
+?>
+</table>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:this.location = '/weapon/add/<?= $this->ship_id; ?>'" class='btn btn-warning'>Crea un nuovo siluro</a>
+
+<div id="menu">
+    <a href="javascript:this.location = '/user/log/out'" class='btn btn-primary'>Logout</a>
+    » <a href="javascript:this.location = '/'" class='btn btn-primary'>Home</a>
+    » <a href="javascript:this.location = '/ship/index/<?= $this->field->getId(); ?>'" class='btn btn-primary'><?= $this->field->getName(); ?></a>
+    » <a href="javascript:this.location = '/ship/panel/<?= $this->ship->getId(); ?>'" class='btn btn-primary'><?= $this->ship->getName(); ?></a>
+</div>

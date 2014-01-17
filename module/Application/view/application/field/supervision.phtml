@@ -1,0 +1,62 @@
+<?php
+
+$namespaces = array('error','success','info','default');
+foreach($namespaces as $namespace) {
+    $flashmessages = $this->flashmessenger()->render($namespace);
+    if(!empty($flashmessages)) {
+        $classe = $namespace=='error'?'danger':$namespace;
+        echo "<div data-alert='alert' class='alert alert-$classe'>";
+        echo "<button class='close' data-dismiss='alert'>&times;</button>";
+        echo "<div style='font-size: 50px;'>$flashmessages</div>";;
+        echo "</div>";
+    }
+}
+
+?>
+<style type="text/css">
+    <!--
+
+    <?php
+
+    foreach ($this->navi as $key => $nave) {
+        echo "#nave$key {\n";
+        echo "   position:absolute;\n";
+        echo "   left: calc(".$nave['x']."% - 25px);\n";
+        echo "   top: calc(".$nave['y']."% - 25px);\n";
+        echo "}\n";
+    }
+    ?>
+    -->
+</style>
+
+<div id="navi">
+    <?php
+    $count = 0;
+    foreach ($this->navi as $key => $nave) {
+        $count++;
+        if($count>7) $count = 1;
+        echo "<div id='nave$key'><img src='/img/nave$count.png' height=50> ".$nave['nome']."</div>\n";
+    }
+    ?>
+</div>
+
+<div id="menu">
+    <a href="javascript:this.location = '/user/log/out'" class='btn btn-primary'>Logout</a>
+    » <a href="javascript:this.location = '/'" class='btn btn-primary'>Home</a>
+    » <b><?= $this->field->getName(); ?></b>
+</div>
+
+<?
+echo '<div id="info">';
+echo "<a href=\"javascript:this.location = '".$this->url('ship',array('action'=>'index', 'id'=>$this->field->getId()))."'\" class='btn btn-primary btn-lg'>Elenco navi</a>";
+echo " <a href=\"javascript:this.location = '".$this->url('field',array('action'=>'supervision', 'id'=>$this->field->getId()))."'\" class='btn btn-primary btn-lg'>Mappa</a>";
+if($this->richiesta) {
+    echo " <a href=\"javascript:this.location = '".$this->url('field',array('action'=>'clock', 'id'=>$this->field->getId(), 'richiesta'=>'1'))."'\" class='btn btn-success btn-lg'>Nessun danno.</a>";
+    echo " <a href=\"javascript:this.location = '".$this->url('field',array('action'=>'clock', 'id'=>$this->field->getId(), 'richiesta'=>'2'))."'\" class='btn btn-warning btn-lg'>Bersaglio colpito!</a>";
+    echo " <a href=\"javascript:this.location = '".$this->url('field',array('action'=>'clock', 'id'=>$this->field->getId(), 'richiesta'=>'3'))."'\" class='btn btn-danger btn-lg'>Siluro difettoso!</a>";
+}
+else {
+    echo " <a href=\"javascript:this.location = '".$this->url('field',array('action'=>'clock', 'id'=>$this->field->getId()))."'\" class='btn btn-warning btn-lg'>Avanzamento</a>";
+}
+echo '</div>';
+?>

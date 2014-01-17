@@ -1,0 +1,97 @@
+<?php
+$this->headMeta()->appendHttpEquiv('refresh','10');
+
+$namespaces = array('error','success','info','default');
+foreach($namespaces as $namespace) {
+    $flashmessages = $this->flashmessenger()->render($namespace);
+    if(!empty($flashmessages)) {
+        $classe = $namespace=='error'?'danger':$namespace;
+        echo "<div data-alert='alert' class='alert alert-$classe'>";
+        echo "<button class='close' data-dismiss='alert'>&times;</button>";
+        echo $flashmessages;
+        echo "</div>";
+    }
+}
+
+?>
+<table>
+<?php
+
+// verifica se l'utente è già arruolato in una di queste navi
+$enrolled = false;
+foreach ($this->ships as $ship) {
+    if($ship->containsMember($this->user)) {
+        $enrolled = true;
+    }
+}
+
+$count = 0;
+foreach ($this->ships as $ship) {
+    $count++;
+    if($count > 7) $count = 1;
+    echo "<tr>";
+    echo "<td>";
+    echo "<img src='/img/nave$count.png' height=70>";
+    echo " <b>".$ship->getName()."</b>";
+    echo "</td>";
+    echo "<td>";
+    $is_the_first = true;
+    foreach ($ship->getMembers() as $member) {
+        if(!$is_the_first) echo ", ";
+        $is_the_first = false;
+        echo $member->getName();
+    }
+    echo "<br>Efficienza: ".(int)$ship->getStatus()."%";
+    echo " - carburante: ".(int)$ship->getFuel()."%";
+    echo "</td>";
+
+    if($this->user->getRole()=='admin') {
+        if(!$ship->getApproved()) {
+            echo "<td><a href=\"javascript:this.location = '".$this->url('ship',array('action'=>'approve', 'id'=>$ship->getId()))."'\" class='btn btn-warning'>Attiva</a>";
+        }
+        else {
+            echo "<td><a href=\"javascript:this.location = '".$this->url('ship',array('action'=>'approve', 'id'=>$ship->getId()))."'\" class='btn btn-primary'>Standby</a>";
+        }
+        echo "<td><a href=\"javascript:this.location = '".$this->url('ship',array('action'=>'edit', 'id'=>$ship->getId()))."'\" class='btn btn-primary'>Modifica</a>";
+        echo "<td><a href=\"javascript:this.location = '".$this->url('ship',array('action'=>'delete', 'id'=>$ship->getId()))."'\" class='btn btn-primary'>Elimina</a>";
+    }
+    else {
+        if(!$ship->getApproved() AND !$ship->containsMember($this->user) AND !$enrolled) {
+            echo "<td><a href=\"javascript:this.location = '".$this->url('ship',array('action'=>'addMember', 'id'=>$ship->getId()))."'\" class='btn btn-primary'>Arruolati nell'equipaggio</a>";
+        }
+        if(!$ship->getApproved() AND $ship->containsMember($this->user)) {
+            echo "<td><a href=\"javascript:this.location = '".$this->url('ship',array('action'=>'removeMember', 'id'=>$ship->getId()))."'\" class='btn btn-primary'>Rimuoviti dall'equipaggio</a>";
+        }
+        if($ship->getApproved() AND $ship->containsMember($this->user)) {
+            echo "<td><a href=\"javascript:this.location = '".$this->url('ship',array('action'=>'panel', 'id'=>$ship->getId()))."'\" class='btn btn-warning'>Accedi alla plancia di comando</a>";
+        }
+    }
+    echo "</tr>";
+}
+
+?>
+</table>
+<?
+if(!$enrolled) {
+?>
+<a href="javascript:this.location = '/ship/add/<?= $this->field_id; ?>'" class='btn btn-primary'>Nuova nave</a>
+<?
+}
+?>
+<div id="menu">
+    <a href="javascript:this.location = '/user/log/out'" class='btn btn-primary'>Logout</a>
+    » <a href="javascript:this.location = '/'" class='btn btn-primary'>Home</a>
+    » <b><?= $this->field->getName(); ?></b>
+</div>
+
+<?
+if($this->user->getRole()=='admin') {
+    echo '<div id="info">';
+
+    echo "<a href=\"javascript:this.location = '".$this->url('ship',array('action'=>'index', 'id'=>$this->field->getId()))."'\" class='btn btn-primary btn-lg'>Elenco navi</a>";
+    echo " <a href=\"javascript:this.location = '".$this->url('field',array('action'=>'supervision', 'id'=>$this->field->getId()))."'\" class='btn btn-primary btn-lg'>Mappa</a>";
+    echo " <a href=\"javascript:this.location = '".$this->url('field',array('action'=>'clock', 'id'=>$this->field->getId()))."'\" class='btn btn-warning btn-lg'>Avanzamento</a>";
+
+    echo '</div>';
+}
+?>

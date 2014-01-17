@@ -1,0 +1,48 @@
+<?php
+
+$namespaces = array('error','success','info','default');
+foreach($namespaces as $namespace) {
+    $flashmessages = $this->flashmessenger()->render($namespace);
+    if(!empty($flashmessages)) {
+        $classe = $namespace=='error'?'danger':$namespace;
+        echo "<div data-alert='alert' class='alert alert-$classe'>";
+        echo "<button class='close' data-dismiss='alert'>&times;</button>";
+        echo $flashmessages;
+        echo "</div>";
+    }
+}
+
+?>
+<table>
+<?php
+
+foreach ($this->fields as $field) {
+    echo "<tr>";
+    echo "<td><a href=\"javascript:this.location = '".$this->url('ship',array('action'=>'index', 'id'=>$field['id']))."'\" class='btn btn-success btn-lg'>".$field['name']."</a></td>";
+
+    if($this->user->getRole()=='admin') {
+        // echo "<td><a href=\"javascript:this.location = '".$this->url('field',array('action'=>'clock', 'id'=>$field['id']))."'\" class='btn btn-primary'>Clock</a>";
+        // echo "<td><a href=\"javascript:this.location = '".$this->url('field',array('action'=>'view', 'id'=>$field['id']))."'\" class='btn btn-primary'>Vista</a>";
+        // echo "<td><a href=\"javascript:this.location = '".$this->url('field',array('action'=>'supervision', 'id'=>$field['id']))."'\" class='btn btn-primary'>Supervisione</a>";
+        // echo "<td><a href=\"javascript:this.location = '".$this->url('ship',array('action'=>'index', 'id'=>$field['id']))."'\" class='btn btn-primary'>Elenco navi</a>";
+        echo "<td><a href=\"javascript:this.location = '".$this->url('field',array('action'=>'edit', 'id'=>$field['id']))."'\" class='btn btn-primary'>Modifica</a>";
+        echo "<td><a href=\"javascript:this.location = '".$this->url('field',array('action'=>'delete', 'id'=>$field['id']))."'\" class='btn btn-primary'>Elimina</a>";
+    }
+    echo "</tr>";
+}
+
+?>
+</table>
+
+<?
+if($this->user->getRole()=='admin') {
+?>
+    <a href="javascript:this.location = '/field/add'" class='btn btn-primary'>Nuovo mare</a>
+    <a href="javascript:this.location = 'http://www.youtube.com/watch?v=fU0bKMj9Kgo'" class='btn btn-warning'>Trailer</a>
+<?
+}
+?>
+<div id="menu">
+    <a href="javascript:this.location = '/user/log/out'" class='btn btn-primary'>Logout</a>
+    » <b>Home</b>
+</div>

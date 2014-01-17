@@ -1,0 +1,158 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * AuthUtenti
+ *
+ * @ORM\Table(name="auth_utenti", indexes={@ORM\Index(name="Cognome_e_Nome", columns={"nome"}), @ORM\Index(name="userid", columns={"utente"})})
+ * @ORM\Entity
+ */
+class AuthUtenti
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="utente", type="string", length=25, nullable=true)
+     */
+    private $utente;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_classe", type="integer", nullable=false)
+     */
+    private $idClasse = '0';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=25, nullable=true)
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string", length=50, nullable=true)
+     */
+    private $nome;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cognome", type="string", length=50, nullable=true)
+     */
+    private $cognome;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="recupero", type="smallint", nullable=false)
+     */
+    private $recupero = '0';
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="prenotazione", type="boolean", nullable=false)
+     */
+    private $prenotazione = '0';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="punti_fisica", type="integer", nullable=false)
+     */
+    private $puntiFisica = '0';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="punti_informatica", type="integer", nullable=false)
+     */
+    private $puntiInformatica = '0';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="punti_matematica", type="integer", nullable=false)
+     */
+    private $puntiMatematica = '0';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="punti_elettrotecnica", type="integer", nullable=false)
+     */
+    private $puntiElettrotecnica = '0';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="punti_tecnologia", type="integer", nullable=false)
+     */
+    private $puntiTecnologia = '0';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="last_login", type="datetime", nullable=true)
+     */
+    private $lastLogin;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="last_ip", type="string", length=20, nullable=true)
+     */
+    private $lastIp;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="livello_fisica", type="integer", nullable=false)
+     */
+    private $livelloFisica = '1';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="livello_informatica", type="integer", nullable=false)
+     */
+    private $livelloInformatica = '1';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="livello_matematica", type="integer", nullable=false)
+     */
+    private $livelloMatematica = '1';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="livello_elettrotecnica", type="integer", nullable=false)
+     */
+    private $livelloElettrotecnica = '1';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="livello_tecnologia", type="integer", nullable=false)
+     */
+    private $livelloTecnologia = '1';
+
+
+}

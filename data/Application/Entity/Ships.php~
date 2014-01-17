@@ -1,0 +1,108 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ships
+ *
+ * @ORM\Table(name="ships", indexes={@ORM\Index(name="IDX_27F71B317E3C61F9", columns={"owner_id"}), @ORM\Index(name="IDX_27F71B31443707B0", columns={"field_id"})})
+ * @ORM\Entity
+ */
+class Ships
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="velocity", type="decimal", precision=5, scale=2, nullable=false)
+     */
+    private $velocity;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="angle", type="decimal", precision=5, scale=2, nullable=false)
+     */
+    private $angle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="x", type="decimal", precision=5, scale=2, nullable=false)
+     */
+    private $x;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="y", type="decimal", precision=5, scale=2, nullable=false)
+     */
+    private $y;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="sonar", type="boolean", nullable=false)
+     */
+    private $sonar;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="integer", nullable=false)
+     */
+    private $status;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="approved", type="boolean", nullable=false)
+     */
+    private $approved;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fuel", type="decimal", precision=5, scale=2, nullable=false)
+     */
+    private $fuel;
+
+    /**
+     * @var \Application\Entity\Fields
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Entity\Fields")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="field_id", referencedColumnName="id")
+     * })
+     */
+    private $field;
+
+    /**
+     * @var \Application\Entity\Users
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
+     * })
+     */
+    private $owner;
+
+
+}
