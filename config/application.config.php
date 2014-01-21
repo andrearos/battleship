@@ -10,7 +10,6 @@ return array(
         'Application',
         'DoctrineModule',       // necessario per l'importazione delle tabelle
         'DoctrineORMModule',    // necessario per l'importazione delle tabelle
-        'Debug',
         'User',
         ),
     'module_listener_options' => array(

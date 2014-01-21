@@ -357,7 +357,7 @@ class ShipController extends AbstractActionController
 
         $count = 0;
         foreach($field->getShips() as $nave) {
-            if($ship->getApproved()) {
+            if($nave->getApproved()) {
                 $count++;
                 $navi[$count]['nome'] = $nave->getName();
 
