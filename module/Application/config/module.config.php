@@ -28,7 +28,7 @@ return array(
             'field' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/field[/][:action[/:id]][/:richiesta]',
+                    'route' => '/field[/][:action[/:id]][/:richiesta][/:weapon_id]',
                     'defaults' => array(
                         'controller' => 'Application\Controller\Field',
                         'action' => 'index',

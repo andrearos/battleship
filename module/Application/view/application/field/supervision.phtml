@@ -51,9 +51,9 @@ echo '<div id="info">';
 echo "<a href=\"javascript:this.location = '".$this->url('ship',array('action'=>'index', 'id'=>$this->field->getId()))."'\" class='btn btn-primary btn-lg'>Elenco navi</a>";
 echo " <a href=\"javascript:this.location = '".$this->url('field',array('action'=>'supervision', 'id'=>$this->field->getId()))."'\" class='btn btn-primary btn-lg'>Mappa</a>";
 if($this->richiesta) {
-    echo " <a href=\"javascript:this.location = '".$this->url('field',array('action'=>'clock', 'id'=>$this->field->getId(), 'richiesta'=>'1'))."'\" class='btn btn-success btn-lg'>Nessun danno.</a>";
-    echo " <a href=\"javascript:this.location = '".$this->url('field',array('action'=>'clock', 'id'=>$this->field->getId(), 'richiesta'=>'2'))."'\" class='btn btn-warning btn-lg'>Bersaglio colpito!</a>";
-    echo " <a href=\"javascript:this.location = '".$this->url('field',array('action'=>'clock', 'id'=>$this->field->getId(), 'richiesta'=>'3'))."'\" class='btn btn-danger btn-lg'>Siluro difettoso!</a>";
+    echo " <a href=\"javascript:this.location = '".$this->url('field',array('action'=>'clock', 'id'=>$this->field->getId(), 'richiesta'=>'1', 'weapon_id'=>$this->richiesta))."'\" class='btn btn-success btn-lg'>Nessun danno.</a>";
+    echo " <a href=\"javascript:this.location = '".$this->url('field',array('action'=>'clock', 'id'=>$this->field->getId(), 'richiesta'=>'2', 'weapon_id'=>$this->richiesta))."'\" class='btn btn-warning btn-lg'>Bersaglio colpito!</a>";
+    echo " <a href=\"javascript:this.location = '".$this->url('field',array('action'=>'clock', 'id'=>$this->field->getId(), 'richiesta'=>'3', 'weapon_id'=>$this->richiesta))."'\" class='btn btn-danger btn-lg'>Siluro difettoso!</a>";
 }
 else {
     echo " <a href=\"javascript:this.location = '".$this->url('field',array('action'=>'clock', 'id'=>$this->field->getId()))."'\" class='btn btn-warning btn-lg'>Avanzamento</a>";

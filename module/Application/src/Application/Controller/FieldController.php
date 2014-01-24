@@ -141,6 +141,7 @@ class FieldController extends AbstractActionController
     {
         $id = (int) $this->params('id');
         $conferma = (int) $this->params('richiesta');
+        $weapon_id = (int) $this->params('weapon_id');
 
         if (null === $id) {
             return $this->redirect()->toRoute('field');
@@ -171,7 +172,7 @@ class FieldController extends AbstractActionController
                             }
                         }
                         if(!is_null($colpita)) {
-                            if($conferma) { // l'azione precedente è confermata
+                            if($conferma && $weapon_id == $weapon->getId()) { // l'azione precedente è confermata
                                 if($conferma==1) {
                                     // nessun danno
                                     $this->em()->remove($weapon);
@@ -209,7 +210,7 @@ class FieldController extends AbstractActionController
                             else { // invio la richiesta di conferma
                                 $this->flashMessenger()->addSuccessMessage("Siluro da ".$ship->getName()." a ".$colpita->getName().": ".$weapon->getText());
 
-                                $result = $this->redirect()->toRoute('field',array('action'=>'supervision', 'id'=>$id, 'richiesta'=>'1'));
+                                $result = $this->redirect()->toRoute('field',array('action'=>'supervision', 'id'=>$id, 'richiesta'=>$weapon->getId()));
                                 return $result;
                             }
                         }
@@ -272,7 +273,7 @@ class FieldController extends AbstractActionController
 
     public function supervisionAction() {
         $field_id = (int) $this->params('id');
-        $richiesta = (int) $this->params('richiesta');
+        $richiesta = (int) $this->params('richiesta'); // contiene l'id del siluro
         if (null === $field_id) {
             return $this->redirect()->toRoute('home');
         }

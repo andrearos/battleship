@@ -33,6 +33,8 @@ class ShipController extends AbstractActionController
     public function indexAction()
     {
         $field_id = (int) $this->params('id');
+        // $ciao = $this->params()->fromQuery('ciao');
+
         if ($field_id === null) {
             return $this->redirect()->toRoute('field');
         }
@@ -46,7 +48,7 @@ class ShipController extends AbstractActionController
             'ships' => $ships,
             'field_id' => $field_id,
             'user' => $this->user(),
-            'field' => $field
+            'field' => $field,
         );
     }
 
